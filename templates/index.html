@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Art Generator 🎨</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🎨</span>
+                <h1>AI Art Generator</h1>
+            </div>
+            <div class="status-badge" id="modelStatus">
+                <span class="status-dot"></span>
+                <span class="status-text">Model kontrol ediliyor...</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <div class="input-section card">
+                <h2>✨ Hayal Gücünüzü Serbest Bırakın</h2>
+                <p class="subtitle">Aklınızdaki görseli tarif edin, AI sizin için oluştursun</p>
+                
+                <form id="generateForm">
+                    <!-- Prompt Input -->
+                    <div class="form-group">
+                        <label for="prompt">
+                            <span class="label-icon">💭</span>
+                            Ne görmek istersiniz?
+                        </label>
+                        <textarea 
+                            id="prompt" 
+                            name="prompt" 
+                            rows="3" 
+                            placeholder="Örnek: A beautiful sunset over mountains, digital art, vibrant colors..."
+                            required
+                        ></textarea>
+                        <small class="hint">İngilizce prompt'lar daha iyi sonuç verir</small>
+                    </div>
+
+                    <!-- Advanced Settings Toggle -->
+                    <button type="button" class="toggle-settings" id="toggleSettings">
+                        <span>⚙️ Gelişmiş Ayarlar</span>
+                        <span class="toggle-icon">▼</span>
+                    </button>
+
+                    <!-- Advanced Settings -->
+                    <div class="advanced-settings" id="advancedSettings">
+                        <!-- Negative Prompt -->
+                        <div class="form-group">
+                            <label for="negativePrompt">
+                                <span class="label-icon">🚫</span>
+                                Negatif Prompt (İstemediğiniz şeyler)
+                            </label>
+                            <input 
+                                type="text" 
+                                id="negativePrompt" 
+                                name="negativePrompt" 
+                                value="ugly, blurry, low quality, distorted"
+                                placeholder="ugly, blurry, low quality..."
+                            >
+                        </div>
+
+                        <!-- Settings Grid -->
+                        <div class="settings-grid">
+                            <!-- Steps -->
+                            <div class="form-group">
+                                <label for="steps">
+                                    <span class="label-icon">🔄</span>
+                                    Adım Sayısı: <span id="stepsValue">30</span>
+                                </label>
+                                <input 
+                                    type="range" 
+                                    id="steps" 
+                                    name="steps" 
+                                    min="10" 
+                                    max="50" 
+                                    value="30"
+                                    class="slider"
+                                >
+                                <small class="hint">Daha fazla adım = daha kaliteli (ama yavaş)</small>
+                            </div>
+
+                            <!-- Guidance Scale -->
+                            <div class="form-group">
+                                <label for="guidanceScale">
+                                    <span class="label-icon">🎯</span>
+                                    Prompt Güçü: <span id="guidanceValue">7.5</span>
+                                </label>
+                                <input 
+                                    type="range" 
+                                    id="guidanceScale" 
+                                    name="guidanceScale" 
+                                    min="1" 
+                                    max="20" 
+                                    step="0.5" 
+                                    value="7.5"
+                                    class="slider"
+                                >
+                                <small class="hint">Yüksek değer = prompt'a daha sadık</small>
+                            </div>
+
+                            <!-- Resolution -->
+                            <div class="form-group">
+                                <label for="resolution">
+                                    <span class="label-icon">📐</span>
+                                    Çözünürlük
+                                </label>
+                                <select id="resolution" name="resolution" class="select">
+                                    <option value="512x512" selected>512x512 (Kare - Hızlı)</option>
+                                    <option value="512x768">512x768 (Dikey)</option>
+                                    <option value="768x512">768x512 (Yatay)</option>
+                                    <option value="768x768">768x768 (Kare - Yavaş)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Generate Button -->
+                    <button type="submit" class="generate-btn" id="generateBtn">
+                        <span class="btn-icon">✨</span>
+                        <span class="btn-text">Görsel Oluştur</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Result Section -->
+            <div class="result-section card" id="resultSection" style="display: none;">
+                <h2>🖼️ Oluşturulan Görsel</h2>
+                
+                <!-- Loading State -->
+                <div class="loading-state" id="loadingState">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Sanat eseri oluşturuluyor...</p>
+                    <p class="loading-subtext">Bu işlem 30-60 saniye sürebilir</p>
+                </div>
+
+                <!-- Generated Image -->
+                <div class="generated-image-container" id="imageContainer" style="display: none;">
+                    <img id="generatedImage" src="" alt="Generated Art">
+                    
+                    <!-- Image Info -->
+                    <div class="image-info">
+                        <div class="info-item">
+                            <span class="info-label">⏱️ Süre:</span>
+                            <span class="info-value" id="generationTime">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">💬 Prompt:</span>
+                            <span class="info-value" id="usedPrompt">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Download Button -->
+                    <a href="#" download class="download-btn" id="downloadBtn">
+                        <span>⬇️ İndir</span>
+                    </a>
+                </div>
+
+                <!-- Error State -->
+                <div class="error-state" id="errorState" style="display: none;">
+                    <span class="error-icon">⚠️</span>
+                    <p class="error-text" id="errorText"></p>
+                    <button class="retry-btn" onclick="document.getElementById('generateForm').requestSubmit()">
+                        🔄 Tekrar Dene
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by <strong>Stable Diffusion v1.5</strong> 🚀</p>
+            <p class="footer-note">💡 İpucu: Detaylı ve açıklayıcı prompt'lar daha iyi sonuçlar verir</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
