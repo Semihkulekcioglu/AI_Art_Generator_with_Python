@@ -9,7 +9,10 @@
 
 🎨 AI-powered image generator using Stable Diffusion v1.5. A modern web application that generates stunning images from text prompts.
 
-![AI Art Generator](https://via.placeholder.com/800x400/667eea/ffffff?text=AI+Art+Generator)
+<img width="512" height="512" alt="art_20251105_161658" src="https://github.com/user-attachments/assets/bb8fe59e-216c-426c-a269-1a95f5553687" />
+<img width="512" height="512" alt="art_20251105_153137" src="https://github.com/user-attachments/assets/9eea7990-bc28-472b-90b6-907c331e0e95" />
+<img width="512" height="512" alt="art_20251105_162357" src="https://github.com/user-attachments/assets/d26a687e-d661-4874-97f7-fd84b844b5ab" />
+
 
 ## ✨ Features
 
