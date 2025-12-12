@@ -13,7 +13,7 @@
 <img width="320" height="320" alt="art_20251105_153137" src="https://github.com/user-attachments/assets/9eea7990-bc28-472b-90b6-907c331e0e95" />
 <img width="320" height="320" alt="art_20251105_162357" src="https://github.com/user-attachments/assets/d26a687e-d661-4874-97f7-fd84b844b5ab" />
 <div align="center">
-<img width="640" height="640" alt="Ekran Görüntüsü (832)" src="https://github.com/user-attachments/assets/15a597f7-c78b-4b98-a268-631a22933322" />
+<img width="720" height="720" alt="Ekran Görüntüsü (832)" src="https://github.com/user-attachments/assets/b1ffd472-7094-418d-9eac-bc3b7a6306ea" />
 </div>
 
 ## ✨ Features
