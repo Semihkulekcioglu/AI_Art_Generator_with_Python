@@ -9,9 +9,11 @@
 
 🎨 AI-powered image generator using Stable Diffusion v1.5. A modern web application that generates stunning images from text prompts.
 
+<div align="center">
 <img width="240" height="240" alt="art_20251105_161658" src="https://github.com/user-attachments/assets/bb8fe59e-216c-426c-a269-1a95f5553687" />
 <img width="240" height="240" alt="art_20251105_153137" src="https://github.com/user-attachments/assets/9eea7990-bc28-472b-90b6-907c331e0e95" />
 <img width="240" height="240" alt="art_20251105_162357" src="https://github.com/user-attachments/assets/d26a687e-d661-4874-97f7-fd84b844b5ab" />
+  </div>
 <div align="center">
 <img width="640" height="640" alt="Ekran Görüntüsü (832)" src="https://github.com/user-attachments/assets/d2e67655-5dcf-4828-a341-214af934925c" />
 </div>
